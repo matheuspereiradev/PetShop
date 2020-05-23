@@ -31,6 +31,22 @@ public class Main {
         
         Comanda c = new Comanda(animal1, funcionario, serv, 12, 1);
         
+        c.finalizarComanda();
         System.out.println(c.calculaTotal());
+        
+        System.out.println("=============CLIENTE===========");
+        System.out.println(c.getAnimal().getDono().getNmPessoa()+" Tel:."+c.getAnimal().getDono().getTelefone()+ " CPF/CNPJ:"+c.getAnimal().getDono().getCdCpfCnpj());
+        System.out.println(c.getAnimal().getDono().getEndereco());
+        System.out.println("=============ANIMAL============");
+        System.out.println(c.getAnimal().getNmAnimal()+" "+c.getAnimal().getRaca()+"("+c.getAnimal().getEspecie()+")");
+        System.out.println("=============FINANCEIRO=======");
+        for (int i =0;i< serv.size();i++) {
+            System.out.println(serv.get(i).getNmServico()+"----"+serv.get(i).getVlServico());
+        }
+        System.out.println("TOTAL========================="+c.calculaTotal());
+        System.out.println("============Entrega===========");
+        System.out.println(c.getEntregador().getNmPessoa()+" "+c.getDtConcluido());
+        
+    
     }
 }

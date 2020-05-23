@@ -17,6 +17,8 @@ public class Animal {
     private String especie;
     private Pessoa dono;
 
+    
+
     public Animal(int idAnimal, String NmAnimal, String cor, String raca, String especie, Pessoa dono) {
         this.idAnimal = idAnimal;
         this.NmAnimal = NmAnimal;
@@ -66,5 +68,12 @@ public class Animal {
         this.especie = especie;
     }
    
+    public Pessoa getDono() {
+        return dono;
+    }
+
+    public void setDono(Pessoa dono) {
+        this.dono = dono;
+    }
 
 }
