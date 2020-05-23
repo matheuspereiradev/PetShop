@@ -15,13 +15,15 @@ public class Animal {
     private String cor;
     private String raca;
     private String especie;
+    private Pessoa dono;
 
-    public Animal(int idAnimal, String NmAnimal, String cor, String raca, String especie) {
+    public Animal(int idAnimal, String NmAnimal, String cor, String raca, String especie, Pessoa dono) {
         this.idAnimal = idAnimal;
         this.NmAnimal = NmAnimal;
         this.cor = cor;
         this.raca = raca;
         this.especie = especie;
+        this.dono=dono;
     }
 
     public int getIdAnimal() {
