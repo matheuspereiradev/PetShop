@@ -5,11 +5,13 @@
  */
 package sistema.entidades;
 
+import sistema.utils.OperacoesDB;
+
 /**
  *
  * @author MATHEUS-PC
  */
-public class Servico {
+public class Servico implements OperacoesDB{
     
     private int idServico;
     private String nmServico;
@@ -46,6 +48,21 @@ public class Servico {
 
     public void setVlServico(double vlServico) {
         this.vlServico = vlServico;
+    }
+
+    @Override
+    public boolean inserir() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deletar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean atualizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

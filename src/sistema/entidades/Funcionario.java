@@ -11,12 +11,12 @@ import java.util.Calendar;
  *
  * @author MATHEUS-PC
  */
-public class Funcionario extends Pessoa{
+public class Funcionario extends Pessoa {
     
     private double vlComissao;
     private String docHabilitacao;
 
-    public Funcionario(double vlComissao, String docHabilitacao, int idPessoa, String nmPessoa, String cdCpfCnpj, Calendar dtnascimento, String telefone, String endereco) {
+    public Funcionario(double vlComissao, String docHabilitacao, int idPessoa, String nmPessoa, String cdCpfCnpj, String dtnascimento, String telefone, String endereco) {
         super(idPessoa, nmPessoa, cdCpfCnpj, dtnascimento, telefone, endereco);
         this.vlComissao = vlComissao;
         this.docHabilitacao = docHabilitacao;

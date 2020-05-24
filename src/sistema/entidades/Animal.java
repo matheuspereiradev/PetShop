@@ -5,11 +5,13 @@
  */
 package sistema.entidades;
 
+import sistema.utils.OperacoesDB;
+
 /**
  *
  * @author MATHEUS-PC
  */
-public class Animal {
+public class Animal implements OperacoesDB{
     private int idAnimal;
     private String NmAnimal;
     private String cor;
@@ -74,6 +76,21 @@ public class Animal {
 
     public void setDono(Pessoa dono) {
         this.dono = dono;
+    }
+
+    @Override
+    public boolean inserir() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deletar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean atualizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

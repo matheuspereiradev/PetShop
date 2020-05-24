@@ -11,13 +11,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import sistema.principal.Utils;
+import sistema.utils.OperacoesDB;
+import sistema.utils.Utils;
 
 /**
  *
  * @author MATHEUS-PC
  */
-public class Comanda {
+public class Comanda implements OperacoesDB{
     
     private Animal animal;
     private Funcionario entregador;
@@ -93,6 +94,22 @@ public class Comanda {
 
     public void setServicos(ArrayList<Servico> servicos) {
         this.servicos = servicos;
+    }
+
+    @Override
+    public boolean inserir() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deletar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+    @Override
+    public boolean atualizar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

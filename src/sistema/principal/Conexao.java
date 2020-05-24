@@ -11,7 +11,7 @@ package sistema.principal;
  */
 public class Conexao {
 
-    public static String servidor = "jdbc:sqlserver://localhost:1433; databaseName=sistema_funcionarios";
+    public static String servidor = "jdbc:sqlserver://localhost:1433; databaseName=petshop";
     public static String usuario = "sa";
     public static String senha = "sanmat9242";
 }
