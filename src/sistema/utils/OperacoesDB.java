@@ -13,6 +13,6 @@ public interface OperacoesDB {
     
     
     public boolean inserir();
-    public boolean deletar(int id);
+    public boolean deletar();
     public boolean atualizar();
 }

@@ -8,10 +8,7 @@ package sistema.entidades;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -39,8 +36,8 @@ public class Pessoa implements OperacoesDB{
         this.endereco = endereco;
     }
     
-    public Pessoa(){
-    
+    public Pessoa(int idPessoa){
+        this.idPessoa=idPessoa;
     }
 
     public int getIdPessoa() {
@@ -132,7 +129,7 @@ public class Pessoa implements OperacoesDB{
     }
 
     @Override
-    public boolean deletar(int id) {
+    public boolean deletar() {
         Connection conexao;
         // instrucao SQL
         PreparedStatement instrucaoSQL;
@@ -147,17 +144,17 @@ public class Pessoa implements OperacoesDB{
             sql = sql + " WHERE id = ?";
 
             instrucaoSQL = conexao.prepareStatement(sql);
-            instrucaoSQL.setInt(1, id);
+            instrucaoSQL.setInt(1, idPessoa);
             instrucaoSQL.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Pessoa apagada com sucesso");
+            JOptionPane.showMessageDialog(null, "Apagado com sucesso");
             
             conexao.close();
             
             return true;
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir a pessoa.");
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir.");
             Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;

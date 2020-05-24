@@ -56,7 +56,7 @@ public class Servico implements OperacoesDB{
     }
 
     @Override
-    public boolean deletar(int id) {
+    public boolean deletar() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

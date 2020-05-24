@@ -5,6 +5,14 @@
  */
 package sistema.entidades;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import sistema.principal.Conexao;
 import sistema.utils.OperacoesDB;
 
 /**
@@ -28,6 +36,10 @@ public class Animal implements OperacoesDB{
         this.raca = raca;
         this.especie = especie;
         this.dono=dono;
+    }
+
+    public Animal(int idAnimal) {
+        this.idAnimal=idAnimal;
     }
 
     public int getIdAnimal() {
@@ -80,17 +92,108 @@ public class Animal implements OperacoesDB{
 
     @Override
     public boolean inserir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          // conexão
+        Connection conexao;
+
+        //intruçao sql
+        PreparedStatement instrucaoSQL;
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            //instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String comando = "INSERT INTO Animal (NmAnimal,cor,raca,especie,idPessoa)";
+            comando = comando + " VALUES (?,?,?,?,?)";
+            instrucaoSQL = conexao.prepareStatement(comando);
+            instrucaoSQL.setString(1, getNmAnimal());
+            instrucaoSQL.setString(2, getCor());
+            instrucaoSQL.setString(3, getRaca());
+            instrucaoSQL.setString(4, getEspecie());
+            instrucaoSQL.setInt(5, getDono().getIdPessoa());
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao adicionar o funcionario.");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 
     @Override
-    public boolean deletar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deletar() {
+        Connection conexao;
+        // instrucao SQL
+        PreparedStatement instrucaoSQL;
+        
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            String sql = "DELETE FROM Animal";
+            sql = sql + " WHERE idAnimal = ?";
+
+            instrucaoSQL = conexao.prepareStatement(sql);
+            instrucaoSQL.setInt(1, idAnimal);
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Apagado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir.");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
     public boolean atualizar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      // conexão
+        Connection conexao;
+
+        //intruçao sql
+        PreparedStatement instrucaoSQL;
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            //instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String comando = "Update Animal SET NmAnimal=?,cor=?,raca=?,especie=? where idAnimal=?";
+            instrucaoSQL = conexao.prepareStatement(comando);
+            instrucaoSQL.setString(1, NmAnimal);
+            instrucaoSQL.setString(2, cor);
+            instrucaoSQL.setString(3, raca);
+            instrucaoSQL.setString(4, especie);
+            instrucaoSQL.setInt(5, idAnimal);
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao editar dados");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;  
+    
     }
 
 }
