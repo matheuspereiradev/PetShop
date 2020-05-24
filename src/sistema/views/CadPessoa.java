@@ -162,7 +162,7 @@ public class CadPessoa extends javax.swing.JInternalFrame {
             pessoa.setTelefone(edtTelefone.getText());
             pessoa.setEndereco(edtEndereco.getText());
             if(pessoa.atualizar()){
-                
+                dispose();
             }
         }
         
@@ -190,5 +190,6 @@ public class CadPessoa extends javax.swing.JInternalFrame {
         edtDtNasc.setText("");
         edtEndereco.setText("");
         edtTelefone.setText("");
+        pessoa=null;
     }
 }

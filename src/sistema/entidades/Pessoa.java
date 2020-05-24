@@ -13,13 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sistema.principal.Conexao;
-import sistema.utils.OperacoesDB;
+import sistema.utils.ClasseRegistravelNoBD;
 
 /**
  *
  * @author MATHEUS-PC
  */
-public class Pessoa implements OperacoesDB{
+public class Pessoa implements ClasseRegistravelNoBD{
     private int idPessoa;
     private String nmPessoa;
     private String cdCpfCnpj;

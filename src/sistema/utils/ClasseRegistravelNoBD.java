@@ -9,7 +9,7 @@ package sistema.utils;
  *
  * @author MATHEUS-PC
  */
-public interface OperacoesDB {
+public interface ClasseRegistravelNoBD {
     
     
     public boolean inserir();

@@ -178,7 +178,7 @@ public class CadAnimal extends javax.swing.JInternalFrame {
             animal.setRaca(edtRaca.getText());
             
             if(animal.atualizar()){
-                   
+               dispose();    
            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -205,5 +205,7 @@ public class CadAnimal extends javax.swing.JInternalFrame {
         edtEspecie.setText("");
         edtNome.setText("");
         edtRaca.setText("");
+        animal=null;
+        dono=null;
     }
 }

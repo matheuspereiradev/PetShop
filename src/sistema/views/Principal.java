@@ -84,9 +84,19 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setText("Serviços");
 
         jMenuItem2.setText("Cadastrar Serviço");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Lista de serviços");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Executar Serviços");
@@ -131,7 +141,9 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        
+        CadFuncionario cad= new CadFuncionario();
+        dskPanel.add(cad);
+        cad.setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -149,6 +161,18 @@ public class Principal extends javax.swing.JFrame {
         dskPanel.add(list);
         list.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        CadServico cad = new CadServico();
+        dskPanel.add(cad);
+        cad.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        ListServicos list=new ListServicos();
+        dskPanel.add(list);
+        list.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     public static void adicionarAoDsk(JInternalFrame frame){
          dskPanel.add(frame);

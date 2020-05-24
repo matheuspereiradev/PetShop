@@ -13,13 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import sistema.principal.Conexao;
-import sistema.utils.OperacoesDB;
+import sistema.utils.ClasseRegistravelNoBD;
 
 /**
  *
  * @author MATHEUS-PC
  */
-public class Animal implements OperacoesDB{
+public class Animal implements ClasseRegistravelNoBD{
     private int idAnimal;
     private String NmAnimal;
     private String cor;
@@ -120,7 +120,7 @@ public class Animal implements OperacoesDB{
             
             return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Falha ao adicionar o funcionario.");
+            JOptionPane.showMessageDialog(null, "Falha ao adicionar.");
             Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
         }
         

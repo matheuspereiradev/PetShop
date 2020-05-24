@@ -11,14 +11,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import sistema.utils.OperacoesDB;
 import sistema.utils.Utils;
+import sistema.utils.ClasseRegistravelNoBD;
 
 /**
  *
  * @author MATHEUS-PC
  */
-public class Comanda implements OperacoesDB{
+public class Comanda implements ClasseRegistravelNoBD{
     
     private Animal animal;
     private Funcionario entregador;
