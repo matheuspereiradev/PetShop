@@ -21,25 +21,12 @@ public class Main {
     
     public static void main(String[]args){
         
-        frame = new JFrame("SISTEMA");
-        frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-
-        //Navegador.menu();
         
-        /*
-        testeOO();
-        */
-    
-    }
-    
-    public void testeOO(){
-    Pessoa ana= new Pessoa(1, "Ana de Souza", "000.000.000-00", "01/01/1997", "98888-1234", "Rua A, nº 12, Juazeiro do norte");
+       Pessoa ana= new Pessoa(1, "Ana de Souza", "000.000.000-00", "01/01/1997", "98888-1234", "Rua A, nº 12, Juazeiro do norte");
         Animal animal1 = new Animal(1, "Apollo", "Marrom", "Shipooh", "Cachorro", ana);
         Servico tosa=new Servico(1, "Tosa", 40);
         Servico banho=new Servico(2, "Banho", 30);
-        Funcionario funcionario=new Funcionario(12, "28821892198", 1, "José Entregador", "010.000.111-11", "15/12/1997", "88992211212", "Rua do Junco, nº 1, Crato");
+        Funcionario funcionario=new Funcionario(1,12, "28821892198", 1, "José Entregador", "010.000.111-11", "15/12/1997", "88992211212", "Rua do Junco, nº 1, Crato");
         
         ArrayList<Servico> serv = new ArrayList<Servico>();
         
@@ -63,5 +50,9 @@ public class Main {
         System.out.println("TOTAL========================="+c.calculaTotal());
         System.out.println("============Entrega===========");
         System.out.println(c.getEntregador().getNmPessoa()+" "+c.getDtConcluido());
+    
+
+    
     }
+    
 }

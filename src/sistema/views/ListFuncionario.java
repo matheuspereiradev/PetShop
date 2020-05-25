@@ -5,17 +5,33 @@
  */
 package sistema.views;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import sistema.entidades.Funcionario;
+import sistema.entidades.Servico;
+import sistema.principal.Conexao;
+import static sistema.views.Principal.dskPanel;
+
 /**
  *
  * @author MATHEUS-PC
  */
 public class ListFuncionario extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form ListFuncionario
-     */
+    Funcionario funcionario;
+    private DefaultTableModel modelLista;
+    
     public ListFuncionario() {
         initComponents();
+        modelLista=(DefaultTableModel) jtableFuncionario.getModel();
+        montaFunionario();
     }
 
     /**
@@ -27,21 +43,210 @@ public class ListFuncionario extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtableFuncionario = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+
+        setClosable(true);
+
+        jtableFuncionario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cód", "Nome", "CPF/CNPJ", "Telefone", "Endereco", "Vl Comissao", "Doc Habilitação"
+            }
+        ));
+        jScrollPane1.setViewportView(jtableFuncionario);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setText("Lista de funcionários");
+
+        jButton1.setText("EDITAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("EXCLUIR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("CADASTRAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/icons/refrescar.png"))); // NOI18N
+        jButton4.setText("Atualizar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addComponent(jScrollPane1)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 889, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 436, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        CadFuncionario cad= new CadFuncionario();
+        Principal.adicionarAoDsk(cad);
+        cad.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(jtableFuncionario.getSelectedRow()!=-1){
+        funcionario=new Funcionario((int) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 0)
+                ,Double.parseDouble( jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 5).toString())
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 6)
+                , 0
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 1)
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 2)
+                , ""
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 3)
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 4));
+        
+        CadFuncionario cad= new CadFuncionario(funcionario);
+        Principal.adicionarAoDsk(cad);
+        cad.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(jtableFuncionario.getSelectedRow()!=-1){
+        funcionario=new Funcionario((int) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 0)
+                ,Double.parseDouble( jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 5).toString())
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 6)
+                , 0
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 1)
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 2)
+                , ""
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 3)
+                , (String) jtableFuncionario.getValueAt(jtableFuncionario.getSelectedRow(), 4));
+        
+         if(funcionario.deletar()){
+            montaFunionario();
+         }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        montaFunionario();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtableFuncionario;
     // End of variables declaration//GEN-END:variables
+
+    private void montaFunionario() {
+        // conexão
+        Connection conexao;
+        // instrucao SQL
+        Statement instrucaoSQL;
+        // resultados
+        ResultSet resultados;
+        
+         modelLista.setRowCount(0);
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql="select * from Cliente c ";
+            sql=sql+"inner Join Funcionario f on c.id=f.idPessoa ";
+            sql=sql+"where 1=1 ";
+            /*if(!jtableFuncionario.getText().equals("")){
+                sql=sql+" and nmPessoa like '%"+jTextField1.getText()+"%'";
+            }*/
+            sql=sql+"order by c.nmPessoa";
+            resultados = instrucaoSQL.executeQuery(sql);
+
+           
+
+            while (resultados.next()) {
+                Object [] funcionario = {resultados.getInt("idFuncionario"),
+                    resultados.getString("nmPessoa"),
+                    resultados.getString("cdCpfCnpj") ,
+                    resultados.getString("telefone"),
+                    resultados.getString("endereco"),
+                    resultados.getDouble("vlComissao"),
+                    resultados.getString("docHabilitacao"),};        
+                modelLista.addRow(funcionario);
+            }
+
+            conexao.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar dados.");
+            Logger.getLogger(this.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

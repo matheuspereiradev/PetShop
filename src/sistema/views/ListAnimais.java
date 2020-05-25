@@ -17,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import sistema.entidades.Animal;
 import sistema.entidades.Pessoa;
 import sistema.principal.Conexao;
-import static sistema.views.Principal.dskPanel;
 
 /**
  *
@@ -58,6 +57,7 @@ public class ListAnimais extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("Lista de animais");
 
         jTableAnimais.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,6 +67,7 @@ public class ListAnimais extends javax.swing.JInternalFrame {
                 "Cód", "Nome", "Cor", "Raça", "Espécie"
             }
         ));
+        jTableAnimais.setGridColor(new java.awt.Color(255, 0, 0));
         jScrollPane1.setViewportView(jTableAnimais);
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N

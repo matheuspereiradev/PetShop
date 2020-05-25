@@ -21,6 +21,19 @@ public class CadFuncionario extends javax.swing.JInternalFrame {
     public CadFuncionario() {
         initComponents();
     }
+    
+    public CadFuncionario(Funcionario funcionario){
+        initComponents();
+        this.funcionario=funcionario;
+        
+        edtCPF.setText(funcionario.getCdCpfCnpj());
+        edtNome.setText(funcionario.getNmPessoa());
+        edtTelefone.setText(funcionario.getTelefone());
+        edtEndereco.setText(funcionario.getEndereco());
+        btnPesq.setVisible(false);
+        edtComissao.setText(String.valueOf(funcionario.getVlComissao()));
+        edtHabilicao.setText(funcionario.getDocHabilitacao());
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -172,13 +185,32 @@ public class CadFuncionario extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (pessoa!=null) {
             
-            funcionario=new Funcionario(Double.parseDouble(edtComissao.getText()) , edtHabilicao.getText(), pessoa.getIdPessoa(), pessoa.getNmPessoa(), pessoa.getCdCpfCnpj(),pessoa.getDtnascimento(), pessoa.getTelefone(), pessoa.getEndereco());
-            funcionario.inserir();
+            funcionario=new Funcionario(0,Double.parseDouble(edtComissao.getText()) , edtHabilicao.getText(), pessoa.getIdPessoa(), pessoa.getNmPessoa(), pessoa.getCdCpfCnpj(),pessoa.getDtnascimento(), pessoa.getTelefone(), pessoa.getEndereco());
+            if(funcionario.inserir()){
+                limpaCampos();
+            }
+        }else if(funcionario!=null){
+            funcionario.setDocHabilitacao(edtHabilicao.getText());
+            funcionario.setVlComissao(Double.parseDouble(edtComissao.getText()));
+            if(funcionario.atualizar()){
+                dispose();
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione a pessoa clicando na lupa");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     
+    
+    public void limpaCampos(){
+        pessoa=null;
+        funcionario=null;
+        edtNome.setText("");
+        edtTelefone.setText("");
+        edtCPF.setText("");
+        edtEndereco.setText("");
+        edtHabilicao.setText("");
+        edtComissao.setText("");
+    }
     
     public void setPessoa(Pessoa pessoa){
         this.pessoa=pessoa;

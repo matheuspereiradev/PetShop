@@ -21,13 +21,15 @@ import sistema.principal.Conexao;
  */
 public class Funcionario extends Pessoa {
     
+    private int idFuncionario;
     private double vlComissao;
     private String docHabilitacao;
 
-    public Funcionario(double vlComissao, String docHabilitacao, int idPessoa, String nmPessoa, String cdCpfCnpj, String dtnascimento, String telefone, String endereco) {
+    public Funcionario(int idFuncionario,double vlComissao, String docHabilitacao, int idPessoa, String nmPessoa, String cdCpfCnpj, String dtnascimento, String telefone, String endereco) {
         super(idPessoa, nmPessoa, cdCpfCnpj, dtnascimento, telefone, endereco);
         this.vlComissao = vlComissao;
         this.docHabilitacao = docHabilitacao;
+        this.idFuncionario=idFuncionario;
     }
 
     public double getVlComissao() {
@@ -48,14 +50,71 @@ public class Funcionario extends Pessoa {
 
     @Override
     public boolean atualizar() {
-        return super.atualizar(); //To change body of generated methods, choose Tools | Templates.
+        // conexão
+        Connection conexao;
+
+        //intruçao sql
+        PreparedStatement instrucaoSQL;
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            //instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String comando = "UPDATE Funcionario set vlComissao=?,docHabilitacao=?";
+            comando = comando + " WHERE idFuncionario=?";
+            instrucaoSQL = conexao.prepareStatement(comando);
+            instrucaoSQL.setDouble(1, vlComissao);
+            instrucaoSQL.setString(2, docHabilitacao);
+            instrucaoSQL.setInt(3, idFuncionario);
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Editado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao editar");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 
     @Override
     public boolean deletar() {
-        return super.deletar(); //To change body of generated methods, choose Tools | Templates.
-    }
+        Connection conexao;
+        // instrucao SQL
+        PreparedStatement instrucaoSQL;
+        
 
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            String sql = "DELETE FROM Funcionario";
+            sql = sql + " WHERE idFuncionario = ?";
+
+            instrucaoSQL = conexao.prepareStatement(sql);
+            instrucaoSQL.setInt(1, idFuncionario);
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Apagado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir.");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     @Override
     public boolean inserir() {
         // conexão
