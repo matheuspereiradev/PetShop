@@ -46,6 +46,8 @@ public class PesqPessoa extends javax.swing.JInternalFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
+        setTitle("Selecione uma pessoa");
+
         btnSeleciona.setText("Selecionar");
         btnSeleciona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

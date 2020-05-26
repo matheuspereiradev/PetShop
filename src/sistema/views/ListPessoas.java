@@ -57,6 +57,7 @@ public class ListPessoas extends javax.swing.JInternalFrame {
         jButton4 = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("Lista de pessoas");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel1.setText("LISTAGEM DE PESSOAS");

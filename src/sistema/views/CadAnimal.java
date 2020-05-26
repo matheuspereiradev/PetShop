@@ -58,6 +58,8 @@ public class CadAnimal extends javax.swing.JInternalFrame {
         edtDonoAnimal = new javax.swing.JTextField();
 
         setClosable(true);
+        setResizable(true);
+        setTitle("Cadastro de animais");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/sistema/icons/gato.png"))); // NOI18N
 
@@ -206,6 +208,5 @@ public class CadAnimal extends javax.swing.JInternalFrame {
         edtNome.setText("");
         edtRaca.setText("");
         animal=null;
-        dono=null;
     }
 }

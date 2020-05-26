@@ -100,6 +100,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Executar Serviços");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -175,6 +180,12 @@ public class Principal extends javax.swing.JFrame {
         dskPanel.add(list);
         list.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        ExecServico exec=new ExecServico();
+        dskPanel.add(exec);
+        exec.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public static void adicionarAoDsk(JInternalFrame frame){
          dskPanel.add(frame);

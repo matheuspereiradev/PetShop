@@ -60,6 +60,7 @@ public class CadFuncionario extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("Cadastro de funcionários");
 
         edtNome.setEditable(false);
 

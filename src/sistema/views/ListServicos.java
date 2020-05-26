@@ -51,6 +51,7 @@ public class ListServicos extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
 
         setClosable(true);
+        setTitle("Catálogo de serviços");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("CATÁLOGO DE SERVIÇOS");

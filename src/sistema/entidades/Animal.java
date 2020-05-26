@@ -8,10 +8,13 @@ package sistema.entidades;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import sistema.principal.Conexao;
 import sistema.utils.ClasseRegistravelNoBD;
 
@@ -41,6 +44,13 @@ public class Animal implements ClasseRegistravelNoBD{
     public Animal(int idAnimal) {
         this.idAnimal=idAnimal;
     }
+
+    @Override
+    public String toString() {
+        return "Nome:" + NmAnimal + ", cor:" + cor + ", raça:" + raca + ", espécie:" + especie;
+    }
+
+
 
     public int getIdAnimal() {
         return idAnimal;
@@ -194,6 +204,43 @@ public class Animal implements ClasseRegistravelNoBD{
         
         return false;  
     
+    }
+    
+    public void montaAnimal(DefaultTableModel table, String pesq){
+        // conexão
+        Connection conexao;
+        // instrucao SQL
+        Statement instrucaoSQL;
+        // resultados
+        ResultSet resultados;
+        
+         table.setRowCount(0);
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql="select * from Animal where idPessoa="+dono.getIdPessoa();
+            
+            if(!pesq.equals("")){
+                sql=sql+" and NmAnimal like '%"+pesq+"%'";
+            }
+            
+            sql=sql+" order by NmAnimal";
+            resultados = instrucaoSQL.executeQuery(sql);
+
+           
+
+            while (resultados.next()) {
+                Object [] animal = {resultados.getInt("idAnimal"), resultados.getString("NmAnimal"), resultados.getString("cor") , resultados.getString("raca"), resultados.getString("especie")};        
+                table.addRow(animal);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar dados.");
+            Logger.getLogger(Animal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

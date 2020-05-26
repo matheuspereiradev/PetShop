@@ -34,7 +34,9 @@ public class ListAnimais extends javax.swing.JInternalFrame {
          modelLista = (DefaultTableModel) jTableAnimais.getModel() ;
         
         this.dono=dono;
-        montaAnimais();
+        animalAtual=new Animal(0);
+        animalAtual.setDono(dono);
+        animalAtual.montaAnimal(modelLista, edtPesq.getText());
         lblTitulo.setText("ANIMAIS DE "+dono.getNmPessoa());
     }
 
@@ -55,6 +57,7 @@ public class ListAnimais extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        edtPesq = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Lista de animais");
@@ -116,9 +119,11 @@ public class ListAnimais extends javax.swing.JInternalFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(385, 385, 385)
+                .addGap(68, 68, 68)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(edtPesq, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -126,9 +131,11 @@ public class ListAnimais extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitulo)
-                    .addComponent(jButton4))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTitulo)
+                        .addComponent(jButton4))
+                    .addComponent(edtPesq))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -171,20 +178,21 @@ public class ListAnimais extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        montaAnimais();
+        animalAtual.montaAnimal(modelLista, edtPesq.getText());
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (jTableAnimais.getSelectedRow()!=-1) {
             animalAtual=new Animal((int) jTableAnimais.getValueAt(jTableAnimais.getSelectedRow(), 0));
             if(animalAtual.deletar()){
-                montaAnimais();
+                animalAtual.montaAnimal(modelLista, edtPesq.getText());
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField edtPesq;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -195,34 +203,4 @@ public class ListAnimais extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblTitulo;
     // End of variables declaration//GEN-END:variables
 
-    private void montaAnimais() {
-        // conexão
-        Connection conexao;
-        // instrucao SQL
-        Statement instrucaoSQL;
-        // resultados
-        ResultSet resultados;
-        
-         modelLista.setRowCount(0);
-        try {
-            // conectando ao banco de dados
-            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
-
-            // criando a instrução SQL
-            instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql="select * from Animal where idPessoa="+dono.getIdPessoa()+" order by NmAnimal";
-            resultados = instrucaoSQL.executeQuery(sql);
-
-           
-
-            while (resultados.next()) {
-                Object [] animal = {resultados.getInt("idAnimal"), resultados.getString("NmAnimal"), resultados.getString("cor") , resultados.getString("raca"), resultados.getString("especie")};        
-                modelLista.addRow(animal);
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao carregar dados.");
-            Logger.getLogger(this.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }
