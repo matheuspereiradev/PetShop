@@ -25,6 +25,7 @@ import sistema.principal.Conexao;
 public class PesqPessoa extends javax.swing.JInternalFrame {
 
     CadFuncionario frame;
+    ExecServico frameservico;
     Pessoa pessoa;
     private DefaultTableModel modelListaPessoas;
     
@@ -33,6 +34,13 @@ public class PesqPessoa extends javax.swing.JInternalFrame {
         modelListaPessoas = (DefaultTableModel) jTabelPessoas.getModel() ;
         montaPessoas();
         this.frame=frame;
+    }
+    
+    public PesqPessoa(ExecServico servi) {
+        initComponents();
+        modelListaPessoas = (DefaultTableModel) jTabelPessoas.getModel() ;
+        montaPessoas();
+        this.frameservico=servi;
     }
 
     
@@ -110,7 +118,13 @@ public class PesqPessoa extends javax.swing.JInternalFrame {
 
     private void btnSelecionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionaActionPerformed
         pessoa= new Pessoa((int) jTabelPessoas.getValueAt(jTabelPessoas.getSelectedRow(), 0),(String) jTabelPessoas.getValueAt(jTabelPessoas.getSelectedRow(), 1),(String)  jTabelPessoas.getValueAt(jTabelPessoas.getSelectedRow(), 2),(String) jTabelPessoas.getValueAt(jTabelPessoas.getSelectedRow(), 3), (String) jTabelPessoas.getValueAt(jTabelPessoas.getSelectedRow(), 4), (String)jTabelPessoas.getValueAt(jTabelPessoas.getSelectedRow(), 5));
-        frame.setPessoa(pessoa);
+        
+        if(frame!=null){
+            frame.setPessoa(pessoa);
+        }else if(frameservico!=null){
+            frameservico.setPessoa(pessoa);
+        }
+        
         dispose();
     }//GEN-LAST:event_btnSelecionaActionPerformed
 

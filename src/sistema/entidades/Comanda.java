@@ -5,12 +5,16 @@
  */
 package sistema.entidades;
 
-import java.text.DateFormat;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import sistema.principal.Conexao;
 import sistema.utils.Utils;
 import sistema.utils.ClasseRegistravelNoBD;
 
@@ -33,7 +37,13 @@ public class Comanda implements ClasseRegistravelNoBD{
         this.servicos = servicos;
         this.desconto = desconto;
         this.acrescimo = acrescimo;
-        Calendar dtConcluido = new GregorianCalendar();
+    }
+    
+    public Comanda(Animal animal, ArrayList<Servico> servicos, double desconto, double acrescimo) {
+        this.animal = animal;
+        this.servicos = servicos;
+        this.desconto = desconto;
+        this.acrescimo = acrescimo;
     }
     
     public double calculaTotal(){
@@ -98,7 +108,38 @@ public class Comanda implements ClasseRegistravelNoBD{
 
     @Override
     public boolean inserir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         // conexão
+        Connection conexao;
+
+        //intruçao sql
+        PreparedStatement instrucaoSQL;
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            //instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String comando = "INSERT INTO Comanda (idAnimal, idPessoa, desconto, acrescimos)";
+            comando = comando + " VALUES (?,?,?,?)";
+            instrucaoSQL = conexao.prepareStatement(comando);
+            instrucaoSQL.setInt(1, animal.getIdAnimal());
+            instrucaoSQL.setInt(2, animal.getDono().getIdPessoa());
+            instrucaoSQL.setDouble(3, desconto);
+            instrucaoSQL.setDouble(4, acrescimo);
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao adicionar");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
     }
 
     @Override
@@ -109,7 +150,7 @@ public class Comanda implements ClasseRegistravelNoBD{
 
     @Override
     public boolean atualizar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Não implemantado ainda");
     }
     
     

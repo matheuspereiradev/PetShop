@@ -37,6 +37,13 @@ public class Servico implements ClasseRegistravelNoBD{
         this.vlServico = vlServico;
     }
 
+    @Override
+    public String toString() {
+        return "Serviço: " + nmServico + ", Valor:" + vlServico ;
+    }
+
+    
+    
     public int getIdServico() {
         return idServico;
     }
