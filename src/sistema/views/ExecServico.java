@@ -83,6 +83,7 @@ public class ExecServico extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listServicos = new javax.swing.JList<>();
 
+        setClosable(true);
         setPreferredSize(new java.awt.Dimension(1056, 550));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
@@ -311,7 +312,7 @@ public class ExecServico extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -328,7 +329,7 @@ public class ExecServico extends javax.swing.JInternalFrame {
             return;
         }
         
-        Comanda c = new Comanda(animal, servicos, desconto, acrescimo);
+        Comanda c = new Comanda(0,animal, servicos, desconto, acrescimo);
         edtTotal.setText(String.valueOf(c.calculaTotal()));
         if(c.inserir()){
             limpaCampos();

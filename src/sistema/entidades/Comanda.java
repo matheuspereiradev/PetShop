@@ -9,7 +9,9 @@ package sistema.entidades;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,21 +32,38 @@ public class Comanda implements ClasseRegistravelNoBD{
     private double desconto;
     private double acrescimo;
     private String dtConcluido;
+    private int idComanda;
     
-    public Comanda(Animal animal, Funcionario entregador, ArrayList<Servico> servicos, double desconto, double acrescimo) {
+    public Comanda(int idComanda,Animal animal, Funcionario entregador, ArrayList<Servico> servicos, double desconto, double acrescimo) {
         this.animal = animal;
         this.entregador = entregador;
         this.servicos = servicos;
         this.desconto = desconto;
         this.acrescimo = acrescimo;
+        this.idComanda=idComanda;
     }
     
-    public Comanda(Animal animal, ArrayList<Servico> servicos, double desconto, double acrescimo) {
+    public Comanda(int idComanda,Animal animal, ArrayList<Servico> servicos, double desconto, double acrescimo) {
         this.animal = animal;
         this.servicos = servicos;
         this.desconto = desconto;
         this.acrescimo = acrescimo;
+        this.idComanda=idComanda;
     }
+    
+    public Comanda(int idComanda){
+        this.idComanda=idComanda;
+    }
+
+    public int getIdComanda() {
+        return idComanda;
+    }
+
+    public void setIdComanda(int idComanda) {
+        this.idComanda = idComanda;
+    }
+    
+    
     
     public double calculaTotal(){
         double totalServicos=0;
@@ -55,9 +74,40 @@ public class Comanda implements ClasseRegistravelNoBD{
         return totalServicos+acrescimo-desconto;
     }
     
-    public void finalizarComanda(){
+    public boolean finalizarComanda(){
         
         this.dtConcluido= Utils.pegarDataAtual();
+         // conexão
+        Connection conexao;
+
+        //intruçao sql
+        PreparedStatement instrucaoSQL;
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            //instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String comando = "UPDATE Comanda set idFuncionario=?,dtConcluido=?";
+            comando = comando + " WHERE idComanda=?";
+            instrucaoSQL = conexao.prepareStatement(comando);
+            instrucaoSQL.setInt(1, this.entregador.getIdFuncionario());
+            instrucaoSQL.setString(2, dtConcluido);
+            instrucaoSQL.setInt(3, idComanda);
+            instrucaoSQL.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Finalizado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Falha ao editar dados");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return false;
 
     }
 
@@ -105,21 +155,22 @@ public class Comanda implements ClasseRegistravelNoBD{
     public void setServicos(ArrayList<Servico> servicos) {
         this.servicos = servicos;
     }
+    
+    
 
     @Override
     public boolean inserir() {
          // conexão
         Connection conexao;
-
-        //intruçao sql
+         //intruçao sql
         PreparedStatement instrucaoSQL;
-
+        Statement instrucaoSQLPesquisa;
+        // resultados
+        ResultSet resultados;
         try {
             // conectando ao banco de dados
             conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
-
-            // criando a instrução SQL
-            //instrucaoSQL = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            //inserir comanda
             String comando = "INSERT INTO Comanda (idAnimal, idPessoa, desconto, acrescimos)";
             comando = comando + " VALUES (?,?,?,?)";
             instrucaoSQL = conexao.prepareStatement(comando);
@@ -128,7 +179,27 @@ public class Comanda implements ClasseRegistravelNoBD{
             instrucaoSQL.setDouble(3, desconto);
             instrucaoSQL.setDouble(4, acrescimo);
             instrucaoSQL.executeUpdate();
-
+            
+            //tenta pegar id da comanda inserida
+            instrucaoSQLPesquisa = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            resultados = instrucaoSQLPesquisa.executeQuery("select top(1) * from Comanda order by idComanda desc");
+            int id=0;
+            while(resultados.next()){
+              id=resultados.getInt("idComanda");
+            }
+            setIdComanda(id);
+            for(int i=0;i<servicos.size();i++){
+                Servico s=servicos.get(i);
+                comando = "INSERT INTO tbgServicoComanda (idComanda, idServico, vlServico)";
+                comando = comando + " VALUES (?,?,?)";
+                instrucaoSQL = conexao.prepareStatement(comando);
+                instrucaoSQL.setInt(1, this.getIdComanda());
+                instrucaoSQL.setInt(2, s.getIdServico());
+                instrucaoSQL.setDouble(3, s.getVlServico());
+                instrucaoSQL.executeUpdate();
+            }
+            
+            
             JOptionPane.showMessageDialog(null, "Adicionado com sucesso");
             
             conexao.close();
@@ -144,10 +215,46 @@ public class Comanda implements ClasseRegistravelNoBD{
 
     @Override
     public boolean deletar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conexao;
+        // instrucao SQL
+        PreparedStatement instrucaoSQL;
+        
+
+        try {
+            // conectando ao banco de dados
+            conexao = DriverManager.getConnection(Conexao.servidor, Conexao.usuario, Conexao.senha);
+
+            // criando a instrução SQL
+            String sql = "DELETE FROM Comanda";
+            sql = sql + " WHERE idComanda = ?";
+
+            instrucaoSQL = conexao.prepareStatement(sql);
+            instrucaoSQL.setInt(1, idComanda);
+            instrucaoSQL.executeUpdate();
+            
+            
+            sql="DELETE FROM tbgServicoComanda";
+            sql = sql + " WHERE idComanda = ?";
+            
+            instrucaoSQL = conexao.prepareStatement(sql);
+            instrucaoSQL.setInt(1, idComanda);
+            instrucaoSQL.executeUpdate();
+            
+            
+            JOptionPane.showMessageDialog(null, "Apagado com sucesso");
+            
+            conexao.close();
+            
+            return true;
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro ao excluir.");
+            Logger.getLogger(Pessoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
-
+    
     @Override
     public boolean atualizar() {
         throw new UnsupportedOperationException("Não implemantado ainda");

@@ -19,6 +19,7 @@ public class Main {
     public static JPanel painel;
     public static JFrame frame;
     
+    
     public static void main(String[]args){
         
         
@@ -33,7 +34,7 @@ public class Main {
         serv.add(tosa);
         serv.add(banho);
         
-        Comanda c = new Comanda(animal1, funcionario, serv, 12, 1);
+        Comanda c = new Comanda(4,animal1, funcionario, serv, 12, 1);
         
         c.finalizarComanda();
         System.out.println(c.calculaTotal());

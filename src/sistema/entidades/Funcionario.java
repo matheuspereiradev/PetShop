@@ -32,6 +32,22 @@ public class Funcionario extends Pessoa {
         this.idFuncionario=idFuncionario;
     }
 
+    @Override
+    public String toString() {
+        return this.getNmPessoa()+"-"+this.getCdCpfCnpj();
+    }
+
+    public int getIdFuncionario() {
+        return idFuncionario;
+    }
+
+    public void setIdFuncionario(int idFuncionario) {
+        this.idFuncionario = idFuncionario;
+    }
+
+    
+    
+    
     public double getVlComissao() {
         return vlComissao;
     }
