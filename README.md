@@ -35,10 +35,11 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 </br></br>
 <p align="center">
 ✔ Java
-✔ Mysql
+✔ MSsql
 <p>
 	
 <p align="center">
+# Equipe
 ✔ Antônio Matheus Lima Pereira
 ✔ João Carlos
 ✔ Francisco Rafael Batista
@@ -49,20 +50,12 @@ Este projeto foi desenvolvido com as seguintes tecnologias:
 <p align="center">
 
 </br>
-✉️ E-mail – matheuspereiradev@gmail.com
+✉️ E-mail – amatheuslp@gmail.com
 </br>
-✉️ E-mail – joaocarlos131@gmail.com
-</br>
-✉️ E-mail – rafaelbatista.sth@gmail.com
 </br>
 :octocat: Github –[https://github.com/](https://github.com/matheuspereiradev)
 </br>
-:octocat: Github –[https://github.com/](https://github.com/joaocarlos131)
-</br>
-:octocat: Github –[https://github.com/](https://github.com/Rafael-Batista-Dev)
-</br>
-Rafael batista – [@Linkedin](https://www.linkedin.com/in/rafael-batista-dev/)
-
+Matheus Lima - [@LinkedIn](https://www.linkedin.com/in/matheuspereiradev/)
 
 </br></br></br></br></br>
 <p align="center">
